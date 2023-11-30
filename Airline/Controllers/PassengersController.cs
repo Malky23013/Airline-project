@@ -1,5 +1,7 @@
-﻿using Airline.Entities;
+﻿using Solid.API;
 using Microsoft.AspNetCore.Mvc;
+using Solid.Core.Services;
+using Solid.API.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,66 +11,50 @@ namespace Airline.Controllers
     [ApiController]
     public class PassengersController : ControllerBase
     {
-        private static List<Passenger> passengers = new List<Passenger> { new Passenger {Id=0,FirstName="Malky",LastName="Zilberberg",Age=20 },
-             new Passenger {Id=0,FirstName="Sara",LastName="Topo",Age=20 }
-        , new Passenger {Id=0,FirstName="Racheli",LastName="Rapaport",Age=19 }};
+
+        private readonly IPassengerService _passengerService;
+
+        public PassengersController(IPassengerService userService)
+        {
+            _passengerService = userService;
+        }
 
         // GET: api/<EventsController>
         [HttpGet]
-        public IEnumerable<Passenger> Get()
+        public IActionResult Get()
         {
-            return passengers;
+            return Ok(_passengerService.GetPassengers());
         }
         [HttpGet("{id}")]
-        public ActionResult<Passenger> Get(int id)
+        public IActionResult Get(int id)
         {
-            var eve = passengers.Find(e => e.Id == id);
-            if (eve == null)
+            var flight = _passengerService.GetById(id);
+            if (flight is null)
             {
-
                 return NotFound();
             }
-            return eve;
+            return Ok(flight);
         }
         // POST api/<EventsController>
         [HttpPost]
         public void Post([FromBody] Passenger newE)
         {
-            passengers.Add(new Passenger { Id = newE.Id, FirstName = newE.FirstName, LastName = newE.LastName, Age = newE.Age });
+            _passengerService.Add(new Passenger { Id = newE.Id, FirstName = newE.FirstName, LastName = newE.LastName, Age = newE.Age });
         }
 
-        // PUT api/<EventsController>/5
+        //// PUT api/<EventsController>/5
         [HttpPut("{id}")]
         public ActionResult<Passenger> Put(int id, [FromBody] Passenger updateEvent)
         {
-            //find the object by id
-            var eve = passengers.Find(e => e.Id == id);
-            if (eve == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-
-                eve.LastName = updateEvent.LastName;
-                eve.Age = updateEvent.Age;
-                eve.FirstName = updateEvent.FirstName;
-                eve.Id = updateEvent.Id;
-            }
-            return eve;
+           return Ok(_passengerService.UpdatePassenger(id, updateEvent));   
+      
         }
 
-        // DELETE api/<EventsController>/5
+        //// DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
-        public ActionResult<Passenger> Delete(int id)
+        public void Delete(int id)
         {
-            var eve = passengers.Find(e => e.Id == id);
-            if (eve == null)
-            {
-                return NotFound();
-            }
-            passengers.Remove(eve);
-            return NoContent();
+         _passengerService.DeletePassenger(id);
         }
     }
 }

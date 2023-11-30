@@ -1,74 +1,60 @@
-﻿using Airline.Entities;
+﻿using Solid.API;
 using Microsoft.AspNetCore.Mvc;
+using Solid.Core.Services;
+using Solid.API.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Airline.Controllers
+namespace Solid.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class FlightsController : ControllerBase
     {
-        private static List<Flight> flights = new List<Flight> { new Flight {Company="El Al",Destination="USA",Source="IL" },
-             new Flight {  Company="American Airlines",Destination="America",Source="IL"}
-        , new Flight {Company = "British Airways", Destination = "England", Source = "Poland" } };
+        private readonly IFlightService _flightService;
+
+        public FlightsController(IFlightService userService)
+        {
+            _flightService = userService;
+        }
 
         // GET: api/<EventsController>
         [HttpGet]
-        public IEnumerable<Flight> Get()
+        public IActionResult Get()
         {
-            return flights;
+            return Ok(_flightService.GetFlights());
         }
         [HttpGet("{id}")]
-        public ActionResult<Flight> Get(int id)
+        public IActionResult Get(int id)
         {
-            var eve = flights.Find(e => e.Id == id);
-            if (eve == null)
+            var flight = _flightService.GetById(id);
+            if (flight is null)
             {
-
                 return NotFound();
             }
-            return eve;
+            return Ok(flight);
         }
-        // POST api/<EventsController>
+        //POST api/<EventsController>
         [HttpPost]
         public void Post([FromBody] Flight newE)
         {
-            flights.Add(new Flight { Company = newE.Company, Destination = newE.Destination, Source = newE.Source });
+            _flightService.Add(new Flight { Company = newE.Company, Destination = newE.Destination, Source = newE.Source });
         }
 
         // PUT api/<EventsController>/5
         [HttpPut("{id}")]
         public ActionResult<Flight> Put(int id, [FromBody] Flight updateEvent)
         {
-            var eve = flights.Find(e => e.Id == id);
-            if (eve == null)
-            {
-                return NotFound();
-            }
-            eve.Company = updateEvent.Company;
-            eve.Destination = updateEvent.Destination;
-            eve.Source = updateEvent.Source;
-
-            return eve;
+          return Ok(_flightService.UpdateFlight(id, updateEvent));  
         }
 
-        // DELETE api/<EventsController>/5
+        //// DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
-        public ActionResult<Flight> Delete(int id)
+        public void Delete(int id)
         {
-            var eve = flights.Find(e => e.Id == id);
-            if (eve == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                flights.Remove(eve);
-                return NoContent();
-            }
+             _flightService.DeleteFlight(id);
         }
-        }
+    }
     
 }
 

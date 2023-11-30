@@ -52,3 +52,9 @@ C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\
 C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\obj\Debug\net6.0\Airline.pdb
 C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\obj\Debug\net6.0\Airline.genruntimeconfig.cache
 C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\obj\Debug\net6.0\ref\Airline.dll
+C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\bin\Debug\net6.0\Solid.Core.dll
+C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\bin\Debug\net6.0\Solid.Data.dll
+C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\bin\Debug\net6.0\Solid.Service.dll
+C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\bin\Debug\net6.0\Solid.Core.pdb
+C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\bin\Debug\net6.0\Solid.Data.pdb
+C:\Users\User\Documents\שנה ו\.net\lesson3-Web Api-Malky Zilberberg\Airline\bin\Debug\net6.0\Solid.Service.pdb

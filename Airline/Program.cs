@@ -1,13 +1,30 @@
+using Microsoft.OpenApi.Models;
+using Solid.Core.Repositories;
+using Solid.Core.Services;
+using Solid.Data;
+using Solid.Data.Repositories;
+using Solid.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(opt => opt.AddPolicy("MyPolicy", policy =>
-{ policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); }));
+// Add services related to flights
+builder.Services.AddScoped<IFlightRepository, FlightRepository>();
+builder.Services.AddScoped<IFlightService, FlightService>();
+
+// Add services related to tickets
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+
+// Add services related to passengers
+builder.Services.AddScoped<IPassengerRepository, PassengerRepository>();
+builder.Services.AddScoped<IPassengerService, PassengerService>();
+
+builder.Services.AddSingleton<DataContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -18,7 +35,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("MyPolicy");
 app.UseAuthorization();
 
 app.MapControllers();

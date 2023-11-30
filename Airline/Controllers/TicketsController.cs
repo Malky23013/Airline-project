@@ -1,6 +1,8 @@
-﻿using Airline.Entities;
+﻿using Solid.API;
 using Microsoft.AspNetCore.Mvc;
+using Solid.Core.Services;
 using System.Net.Sockets;
+using Solid.API.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,61 +12,50 @@ namespace Airline.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
-        private static List<Ticket> tickets = new List<Ticket> { new Ticket {Id=0,Company="EL AL",Price=3000,Date=new DateTime(2023,09,10) },
-            new Ticket {Id=0,Company="American Airlines",Price=2900,Date=new DateTime(2023,05,04)  }
-        ,  new Ticket {Id=0,Company="United",Price=2700,Date=new DateTime(2023,06,10) }};
+
+        // GET: api/<EventsController>
+        private readonly ITicketService _ticketService;
+
+        public TicketsController(ITicketService ticketService)
+        {
+            _ticketService = ticketService;
+        }
 
         // GET: api/<EventsController>
         [HttpGet]
-        public IEnumerable<Ticket> Get()
+        public IActionResult Get()
         {
-            return tickets;
+            return Ok(_ticketService.GetTickets());
         }
         [HttpGet("{id}")]
-        public ActionResult<Ticket> Get(int id)
+        public IActionResult Get(int id)
         {
-            var eve = tickets.Find(e => e.Id == id);
-            if (eve == null)
-            {
-                return NoContent();
-            }
-            return eve;
-        }
-        // POST api/<EventsController>
-        [HttpPost]
-        public void Post([FromBody] Ticket newE)
-        {
-            tickets.Add(new Ticket { Id = newE.Id, Company = newE.Company, Date = newE.Date, Price = newE.Price });
-        }
-
-        // PUT api/<EventsController>/5
-        [HttpPut("{id}")]
-        public ActionResult<Ticket> Put(int id, [FromBody] Ticket updateEvent)
-        {
-            //find the object by id
-            var eve = tickets.Find(e => e.Id == id);
-            if (eve == null)
-            {
-                return NoContent();
-            }
-            eve.Id = updateEvent.Id;
-            eve.Company = updateEvent.Company;
-            eve.Price = updateEvent.Price;
-            eve.Date = updateEvent.Date;
-            return eve;
-        }
-
-        // DELETE api/<EventsController>/5
-        [HttpDelete("{id}")]
-        public ActionResult<Ticket> Delete(int id)
-        {
-            var eve = tickets.Find(e => e.Id == id);
-            if (eve == null)
+            var flight = _ticketService.GetById(id);
+            if (flight is null)
             {
                 return NotFound();
             }
-            tickets.Remove(eve);
-            return NoContent();
+            return Ok(flight);
+        }
+        // POST api/<EventsController>
+        [HttpPost]
+        public void Post([FromBody] Ticket newt)
+        {
+            _ticketService.Add(new Ticket { Id = newt.Id, Company = newt.Company, Date = newt.Date, Price = newt.Price });
+        }
+
+        //// PUT api/<EventsController>/5
+        [HttpPut("{id}")]
+        public ActionResult<Ticket> Put(int id, [FromBody] Ticket updateEvent)
+        {
+           return Ok(_ticketService.UpdateTicket(id, updateEvent)) ;
+        }
+
+        //// DELETE api/<EventsController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _ticketService.DeleteTicket(id);
         }
     }
 }

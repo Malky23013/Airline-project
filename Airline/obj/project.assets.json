@@ -88,6 +88,42 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "Solid.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Solid.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Solid.Core.dll": {}
+        }
+      },
+      "Solid.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Solid.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Solid.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Solid.Data.dll": {}
+        }
+      },
+      "Solid.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Solid.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Solid.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Solid.Service.dll": {}
+        }
       }
     }
   },
@@ -216,10 +252,28 @@
         "swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "Solid.Core/1.0.0": {
+      "type": "project",
+      "path": "../Solid.Core/Solid.Core.csproj",
+      "msbuildProject": "../Solid.Core/Solid.Core.csproj"
+    },
+    "Solid.Data/1.0.0": {
+      "type": "project",
+      "path": "../Solid.Data/Solid.Data.csproj",
+      "msbuildProject": "../Solid.Data/Solid.Data.csproj"
+    },
+    "Solid.Service/1.0.0": {
+      "type": "project",
+      "path": "../Solid.Service/Solid.Service.csproj",
+      "msbuildProject": "../Solid.Service/Solid.Service.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Solid.Core >= 1.0.0",
+      "Solid.Data >= 1.0.0",
+      "Solid.Service >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
   },
@@ -230,9 +284,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Airline\\Airline.csproj",
-      "projectName": "Airline",
-      "projectPath": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Airline\\Airline.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Airline\\Solid.API.csproj",
+      "projectName": "Solid.API",
+      "projectPath": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Airline\\Solid.API.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Airline\\obj\\",
       "projectStyle": "PackageReference",
@@ -254,7 +308,17 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Solid.Core\\Solid.Core.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Solid.Core\\Solid.Core.csproj"
+            },
+            "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Solid.Data\\Solid.Data.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Solid.Data\\Solid.Data.csproj"
+            },
+            "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Solid.Service\\Solid.Service.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\שנה ו\\.net\\lesson3-Web Api-Malky Zilberberg\\Solid.Service\\Solid.Service.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
